@@ -1,0 +1,53 @@
+{
+  "builders": [
+    {
+      "type": "vmware-iso",
+      "headless": false,
+      "http_directory": "{{ user `http_directory` }}",
+
+      "boot_wait": "3s",
+      "boot_command": [
+        "<tab> linux ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{ user `ks_path` }}<enter><wait>"
+      ],
+
+      "vm_name": "{{ user `vm_name` }}",
+      "output_directory": "{{ user `build_directory` }}/packer-{{ user `vm_name` }}-vmware",
+
+      "cpus": "{{ user `cpus` }}",
+      "memory": "{{ user `memory` }}",
+      "disk_size": "{{ user `disk_size` }}",
+      "vmx_data": {
+        "cpuid.coresPerSocket": "{{ user `cores_per_socket` }}",
+        "ethernet0.pciSlotNumber": "33"
+      },
+
+      "guest_os_type": "fedora-64",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+      "iso_url": "{{ user `iso_url` }}",
+
+      "ssh_port": 22,
+      "ssh_username": "{{ user `username` }}",
+      "ssh_password": "{{ user `password` }}",
+      "ssh_timeout": "10000s",
+      "shutdown_command": "echo '{{ user `password` }}' | sudo -S shutdown -P now"
+    }
+  ],
+
+  "variables": {
+    "build_directory": "../../builds",
+    "cpus": "1",
+    "cores_per_socket": "4",
+    "disk_size": "20480",
+    "http_directory": "{{ template_dir }}/http",
+    "iso_checksum": "559e82173d44d5500739d473a32e2bd24a66a49f0034020f9f86c9d5da6a2c61",
+    "iso_checksum_type": "sha256",
+    "iso_url": "https://download.fedoraproject.org/pub/fedora/linux/releases/31/Everything/x86_64/iso/Fedora-Everything-netinst-x86_64-31-1.9.iso",
+    "ks_path": "kickstart.cfg",
+    "memory": "6144",
+    "no_proxy": "{{ env `no_proxy` }}",
+    "username": "vmware",
+    "password": "vmware",
+    "vm_name": "fedora-31-x86_64"
+  }
+}
