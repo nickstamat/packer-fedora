@@ -1,6 +1,7 @@
 # Packer Template for Fedora
 
 ![](https://img.shields.io/github/license/nickstamat/packer-fedora?style=flat-square)
+![](https://img.shields.io/badge/fedora-31-3c6eb4?style=flat-square)
 
 ## Overview
 
